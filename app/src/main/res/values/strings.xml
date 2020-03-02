@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">ForaSoft test task</string>
+    <string name="item_artist">Исполнитель</string>
+    <string name="item_album_name">Название альбома</string>
+    <string name="search">Поиск</string>
+    <string name="clear_search">Очистить</string>
+    <string name="year">Год</string>
+</resources>
