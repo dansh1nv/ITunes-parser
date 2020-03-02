@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">ForaSoft test task</string>
+    <string name="app_name">Itunes Parser</string>
     <string name="item_artist">Исполнитель</string>
     <string name="item_album_name">Название альбома</string>
     <string name="search">Поиск</string>
