@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.View
+import android.widget.TextView
 import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -23,6 +24,7 @@ class AlbumListFragment : BaseFragment(R.layout.fragment_album_list) {
     private val viewModel: AlbumListViewModel by lazy {
         ViewModelProviders.of(this).get(AlbumListViewModel::class.java)
     }
+    private var mTextList: TextView? = null
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         menu.clear()
@@ -35,6 +37,7 @@ class AlbumListFragment : BaseFragment(R.layout.fragment_album_list) {
                 searchView.setQuery("", false)
                 searchItem.collapseActionView()
                 viewModel.fetchAlbums(query)
+                mTextList?.visibility = View.GONE
                 return true
             }
 
@@ -45,6 +48,7 @@ class AlbumListFragment : BaseFragment(R.layout.fragment_album_list) {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        initialize()
         setupObservers()
     }
 
@@ -70,6 +74,10 @@ class AlbumListFragment : BaseFragment(R.layout.fragment_album_list) {
         val value = albumItem.collectionId
         intent.putExtra(Constants.COLLECTION_ID, value)
         startActivity(intent)
+    }
+
+    private fun initialize(){
+        mTextList = activity?.findViewById(R.id.text_list)
     }
 
     companion object {

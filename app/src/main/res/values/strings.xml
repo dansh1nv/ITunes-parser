@@ -1,8 +1,9 @@
 <resources>
-    <string name="app_name">Itunes Parser</string>
+    <string name="app_name">ITunes Parser</string>
     <string name="item_artist">Исполнитель</string>
     <string name="item_album_name">Название альбома</string>
     <string name="search">Поиск</string>
     <string name="clear_search">Очистить</string>
     <string name="year">Год</string>
+    <string name="text_list">Данные отсутствуют</string>
 </resources>
