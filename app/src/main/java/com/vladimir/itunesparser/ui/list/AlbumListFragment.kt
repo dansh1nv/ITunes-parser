@@ -8,7 +8,7 @@ import android.view.View
 import android.widget.TextView
 import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.vladimir.itunesparser.R
 import com.vladimir.itunesparser.data.models.Album
@@ -22,7 +22,7 @@ import kotlinx.android.synthetic.main.fragment_album_list.*
 class AlbumListFragment : BaseFragment(R.layout.fragment_album_list) {
 
     private val viewModel: AlbumListViewModel by lazy {
-        ViewModelProviders.of(this).get(AlbumListViewModel::class.java)
+        ViewModelProvider(this).get(AlbumListViewModel::class.java)
     }
     private var mTextList: TextView? = null
 
@@ -53,7 +53,7 @@ class AlbumListFragment : BaseFragment(R.layout.fragment_album_list) {
     }
 
     private fun setupObservers() {
-        viewModel.albumLiveData.observe(this, Observer {
+        viewModel.albumLiveData.observe(viewLifecycleOwner, Observer {
             setupAlbumsRv(it)
         })
     }

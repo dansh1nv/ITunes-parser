@@ -5,7 +5,7 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.squareup.picasso.Picasso
 import com.vladimir.itunesparser.R
@@ -24,7 +24,7 @@ class AlbumDetailFragment : BaseFragment(R.layout.fragment_detail) {
     private var mCopyright: TextView? = null
 
     private val detailViewModel: AlbumDetailViewModel by lazy {
-        ViewModelProviders.of(this).get(AlbumDetailViewModel::class.java)
+        ViewModelProvider(this).get(AlbumDetailViewModel::class.java)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -44,10 +44,10 @@ class AlbumDetailFragment : BaseFragment(R.layout.fragment_detail) {
     }
 
     private fun setupObservers() {
-        detailViewModel.trackLiveData.observe(this, Observer {
+        detailViewModel.trackLiveData.observe(viewLifecycleOwner, Observer {
             setupTracksRv(it)
         })
-        detailViewModel.albumDetailLiveData.observe(this, Observer {
+        detailViewModel.albumDetailLiveData.observe(viewLifecycleOwner, Observer {
             setupAlbumDetail(it)
         })
     }
