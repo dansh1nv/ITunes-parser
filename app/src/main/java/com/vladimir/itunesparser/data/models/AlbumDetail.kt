@@ -11,7 +11,7 @@ data class AlbumDetail(
     @Json(name = "artworkUrl100")
     val artworkUrl: String?,  //Ссылка на обложку альбома
     @Json(name = "collectionId")
-    val collectionId: Int?,
+    val collectionId: String?,
     @Json(name = "collectionName")
     val albumName: String?, //Название альбома
     @Json(name = "copyright")
@@ -26,11 +26,11 @@ data class AlbumDetail(
     @Json(name = "trackName")
     val trackName: String?, //название трека
     @Json(name = "trackNumber")
-    val trackNumber: Int?, //номер трека
+    val trackNumber: String?, //номер трека
     @Json(name = "trackTimeMillis")
-    val trackTimeMillis: Int?, //длительность трека
+    val trackTimeMillis: String?, //длительность трека
     @Json(name = "discCount")
-    val discCount: Int?, //Число дисков
+    val discCount: String?, //Число дисков
     @Json(name = "discNumber")
-    val discNumber: Int? //Номер диска
+    val discNumber: String? //Номер диска
 )

@@ -3,6 +3,7 @@ package com.vladimir.itunesparser.ui.album
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.vladimir.itunesparser.data.models.AlbumDetail
+import com.vladimir.itunesparser.data.models.Track
 import com.vladimir.itunesparser.data.network.ApiFactory
 import com.vladimir.itunesparser.data.repository.AlbumDetailRepository
 import kotlinx.coroutines.*
@@ -20,16 +21,14 @@ class AlbumDetailViewModel : ViewModel() {
     private val repository: AlbumDetailRepository =
         AlbumDetailRepository(ApiFactory.itunesApi)
 
-    val trackLiveData = MutableLiveData<List<AlbumDetail>>()
+    val trackLiveData = MutableLiveData<List<Track>>()
     val albumDetailLiveData = MutableLiveData<List<AlbumDetail>>()
 
     fun fetchAlbumDetail(collectionId: String) {
 
         scope.launch {
             try {
-                val tracks = repository.getAlbumDetail(collectionId)?.filter {
-                    it.wrapperType == "track"
-                }
+                val tracks = repository.getTrack(collectionId)
                 trackLiveData.postValue(tracks)
                 val albumDetail = repository.getAlbumDetail(collectionId)?.filter {
                     it.wrapperType == "collection"

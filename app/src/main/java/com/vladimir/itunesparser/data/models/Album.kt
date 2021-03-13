@@ -11,7 +11,7 @@ data class Album(
     @Json(name = "artworkUrl100")
     val artworkUrl: String?,  //Ссылка на обложку альбома
     @Json(name = "collectionId")
-    val collectionId: Int?,
+    val collectionId: String?,
     @Json(name = "collectionName")
     val albumName: String? //Название альбома
 )

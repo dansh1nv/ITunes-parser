@@ -1,75 +1,86 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_margin="@dimen/spacing_xlarge"
-    android:orientation="vertical">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <ImageView
-        android:id="@+id/artwork"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        app:layout_constraintEnd_toStartOf="@id/album_name"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:srcCompat="@mipmap/ic_launcher" />
+    <data>
+        <variable
+            name="albumDetail"
+            type="com.vladimir.itunesparser.data.models.AlbumDetail" />
+    </data>
 
-    <TextView
-        android:textSize="18sp"
-        android:textStyle="bold"
-        android:id="@+id/album_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:padding="@dimen/spacing_xsmall"
-        tools:text="@string/item_album_name"
-        app:layout_constraintBottom_toTopOf="@id/artist_name"
-        app:layout_constraintStart_toEndOf="@id/album_name"
-        app:layout_constraintTop_toTopOf="parent" />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="@dimen/spacing_xlarge">
 
-    <TextView
-        android:textColor="@color/colorAccent"
-        android:textSize="16sp"
-        android:id="@+id/artist_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:padding="@dimen/spacing_xsmall"
-        tools:text="@string/item_artist"
-        app:layout_constraintStart_toEndOf="@id/album_name"
-        app:layout_constraintTop_toBottomOf="@id/album_name" />
+        <ImageView
+            android:id="@+id/artwork"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            app:layout_constraintEnd_toStartOf="@id/album_name"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:srcCompat="@mipmap/ic_launcher" />
 
-    <TextView
-        android:textSize="12sp"
-        android:id="@+id/genre_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:padding="@dimen/spacing_xsmall"
-        tools:text="Жанр"
-        app:layout_constraintStart_toEndOf="@id/album_name"
-        app:layout_constraintTop_toBottomOf="@id/artist_name" />
+        <TextView
+            android:id="@+id/album_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/spacing_xsmall"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:text="@{albumDetail.albumName}"
+            app:layout_constraintBottom_toTopOf="@id/artist_name"
+            app:layout_constraintStart_toEndOf="@id/artwork"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="@string/item_album_name" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/track_list"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintBottom_toTopOf="@id/copyright"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/artwork"
-        tools:listitem="@layout/list_item_track" />
+        <TextView
+            android:id="@+id/artist_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/spacing_xsmall"
+            android:textColor="@color/colorAccent"
+            android:textSize="16sp"
+            android:text="@{albumDetail.artistName}"
+            app:layout_constraintStart_toEndOf="@id/artwork"
+            app:layout_constraintTop_toBottomOf="@id/album_name"
+            tools:text="@string/item_artist" />
 
-    <TextView
-        android:id="@+id/copyright"
-        android:textSize="12sp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        tools:text="This Compilation ℗ 2014 Hollywood Records, Inc."
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/track_list" />
+        <TextView
+            android:id="@+id/genre_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/spacing_xsmall"
+            android:textSize="12sp"
+            android:text="@{albumDetail.genreName}"
+            app:layout_constraintStart_toEndOf="@id/artwork"
+            app:layout_constraintTop_toBottomOf="@id/artist_name"
+            tools:text="Жанр" />
 
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/track_list"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintBottom_toTopOf="@id/copyright"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/artwork"
+            tools:listitem="@layout/list_item_track" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:id="@+id/copyright"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:textSize="12sp"
+            android:text="@{albumDetail.copyright}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/track_list"
+            tools:text="This Compilation ℗ 2014 Hollywood Records, Inc." />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

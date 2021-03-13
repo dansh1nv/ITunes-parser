@@ -5,5 +5,6 @@ object Constants {
     const val MEDIA = "music"
     const val SONG = "song"
     const val ENTITY = "album"
+    const val TRACK = "track"
     const val COLLECTION_ID = "collectionId"
 }

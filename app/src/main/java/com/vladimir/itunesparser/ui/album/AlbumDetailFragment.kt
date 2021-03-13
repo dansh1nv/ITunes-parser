@@ -2,26 +2,22 @@ package com.vladimir.itunesparser.ui.album
 
 import android.os.Bundle
 import android.view.View
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.squareup.picasso.Picasso
 import com.vladimir.itunesparser.R
 import com.vladimir.itunesparser.data.models.AlbumDetail
+import com.vladimir.itunesparser.data.models.Track
+import com.vladimir.itunesparser.databinding.FragmentDetailBinding
 import com.vladimir.itunesparser.platform.BaseFragment
 import com.vladimir.itunesparser.ui.album.adapters.TrackAdapter
+import com.vladimir.itunesparser.utils.viewBinding
 import com.vladimir.testtask.utils.Constants
-import kotlinx.android.synthetic.main.fragment_detail.*
 
 class AlbumDetailFragment : BaseFragment(R.layout.fragment_detail) {
 
-    private var mAlbumName: TextView? = null
-    private var mArtistName: TextView? = null
-    private var mGenre: TextView? = null
-    private var mArtwork: ImageView? = null
-    private var mCopyright: TextView? = null
+    private val binding by viewBinding (FragmentDetailBinding::bind)
 
     private val detailViewModel: AlbumDetailViewModel by lazy {
         ViewModelProvider(this).get(AlbumDetailViewModel::class.java)
@@ -34,40 +30,38 @@ class AlbumDetailFragment : BaseFragment(R.layout.fragment_detail) {
     }
 
     private fun initialize(){
-        val query = activity?.intent?.getIntExtra(Constants.COLLECTION_ID, -1).toString()
+        val query = activity?.intent?.getStringExtra(Constants.COLLECTION_ID).orEmpty()
         detailViewModel.fetchAlbumDetail(query)
-        mAlbumName = activity?.findViewById(R.id.album_name)
-        mArtistName = activity?.findViewById(R.id.artist_name)
-        mGenre = activity?.findViewById(R.id.genre_name)
-        mArtwork = activity?.findViewById(R.id.artwork)
-        mCopyright = activity?.findViewById(R.id.copyright)
     }
 
     private fun setupObservers() {
-        detailViewModel.trackLiveData.observe(viewLifecycleOwner, Observer {
+        detailViewModel.trackLiveData.observe(viewLifecycleOwner, {
             setupTracksRv(it)
         })
-        detailViewModel.albumDetailLiveData.observe(viewLifecycleOwner, Observer {
-            setupAlbumDetail(it)
+        detailViewModel.albumDetailLiveData.observe(viewLifecycleOwner, {
+            val album = it[0]
+            setupAlbumDetail(album)
         })
     }
 
-    private fun setupTracksRv(albumDetails: List<AlbumDetail>) {
-        track_list.apply {
-            layoutManager = LinearLayoutManager(activity)
-            adapter = TrackAdapter(albumDetails)
+    private fun setupTracksRv(tracks: List<Track>) {
+        binding.trackList.apply {
+            layoutManager =  LinearLayoutManager(activity)
+            adapter = TrackAdapter(tracks)
         }
     }
 
-    private fun setupAlbumDetail(albumDetails: List<AlbumDetail>) {
-        val albumDetail = albumDetails[0]
-        mAlbumName?.text = albumDetail.albumName
-        mArtistName?.text = albumDetail.artistName
-        mGenre?.text = albumDetail.genreName
+    private fun setupAlbumDetail(albumDetail: AlbumDetail) {
+        binding.apply {
+            albumName.text = albumDetail.albumName
+            artistName.text = albumDetail.artistName
+            genreName.text = albumDetail.genreName
+            copyright.text = albumDetail.copyright
+        }
+
         Picasso.get()
             .load(albumDetail.artworkUrl)
-            .into(mArtwork)
-        mCopyright?.text = albumDetail.copyright
+            .into(binding.artwork)
     }
 
     companion object {
